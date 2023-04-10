@@ -24,5 +24,22 @@ const textarea = document.querySelector("textarea"),
 // cancel: cancel the speech
 
 
-let synth = speechSynthesis;
+let synth = speechSynthesis,
+    isSpeaking = true;
 
+voices();
+
+function voices() {
+
+    for (let voice of synth.getVoices()){
+        let selected = voice.name === "Google US English" ? "selected" : "";
+        let option = `<option value="${voice.name}" ${selected}>${voice.name} (${voice.lang})</option>`;
+        voiceList.insertAdjacentElement("beforeend", option)
+    }
+}
+
+
+// synth.getVoices() returns empty array, when a page is loaded, it takes some amount of time to populate the voices array as it does so, asynchronously. Due to which when the array is logged into the console immediately after the page loads, we see an empty array...so use setTimeout below to log it after some time.
+// setTimeout(()=>{
+//     console.log(synth.getVoices())
+// }, 1000)
