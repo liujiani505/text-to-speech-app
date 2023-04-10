@@ -27,19 +27,23 @@ const textarea = document.querySelector("textarea"),
 let synth = speechSynthesis,
     isSpeaking = true;
 
-voices();
+// voices();
 
 function voices() {
 
     for (let voice of synth.getVoices()){
         let selected = voice.name === "Google US English" ? "selected" : "";
         let option = `<option value="${voice.name}" ${selected}>${voice.name} (${voice.lang})</option>`;
-        voiceList.insertAdjacentElement("beforeend", option)
+        voiceList.insertAdjacentHTML("beforeend", option);
     }
 }
 
+// This is used to repopulate a list of voices that the user can choose between when the event fires. You can use the voiceschanged event in an addEventListener method.
+synth.addEventListener("voiceschanged", voices);
 
 // synth.getVoices() returns empty array, when a page is loaded, it takes some amount of time to populate the voices array as it does so, asynchronously. Due to which when the array is logged into the console immediately after the page loads, we see an empty array...so use setTimeout below to log it after some time.
 // setTimeout(()=>{
 //     console.log(synth.getVoices())
 // }, 1000)
+
+
