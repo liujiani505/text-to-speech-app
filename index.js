@@ -57,3 +57,34 @@ function textToSpeech(text){
     synth.speak(utterance);
 }
 
+
+speechBtn.addEventListener("click", e => {
+    // when clicking on the button, browser refreshes, this is to get rid of the default behavior
+    e.preventDefault();
+    if(textarea.value !== ""){
+        // Checks if not speaking, speak textarea text
+        if(!synth.speaking){
+            textToSpeech(textarea.value);
+        }
+        // If text was long, add resume and pause function
+        if(textarea.value.length > 80){
+            setInterval(() => {
+                if(!synth.speaking && !isSpeaking) {
+                    isSpeaking = true;
+                    speechBtn.innerText = "Convert To Speech"
+                } else {}
+            }, 500);
+            if(isSpeaking){
+                synth.resume();
+                isSpeaking = false;
+                speechBtn.innerText = "Pause Speech";
+            } else {
+                synth.pause();
+                isSpeaking = true;
+                speechBtn.innerText = "Resume Speech";
+            }
+        } else {
+            speechBtn.innerText = "Convert To Speech";
+        }
+    }
+})
