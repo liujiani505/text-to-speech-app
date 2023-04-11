@@ -47,3 +47,13 @@ synth.addEventListener("voiceschanged", voices);
 // }, 1000)
 
 
+function textToSpeech(text){
+    let utterance = new SpeechSynthesisUtterance(text);
+    for (let voice of synth.getVoices()){
+        if(voice.name === voiceList.value) {
+            utterance.voice = voice;
+        }
+    }
+    synth.speak(utterance);
+}
+
